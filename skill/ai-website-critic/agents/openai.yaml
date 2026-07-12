@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Website Critic"
+  short_description: "Review websites like a senior product designer"
+  default_prompt: "Use $ai-website-critic to review a website and produce an evidence-based product design critique."
