@@ -6,7 +6,19 @@
 
 ## Executive verdict
 
-{{concise_product_judgment}}
+> **Verdict:** {{concise_product_judgment}}
+>
+> **Most important action:** {{single_highest_leverage_action}}
+
+**No P0 issue found.** {{or_replace_with_p0_warning}}
+
+## Priority snapshot
+
+| Priority | Finding | Impact | Recommended action |
+| --- | --- | --- | --- |
+| **P1** | | | |
+| **P1** | | | |
+| **P2** | | | |
 
 ## Scorecard
 
@@ -41,7 +53,7 @@
 
 {{coherent_direction}}
 
-## Quick wins
+## Immediate actions
 
 {{ordered_quick_wins}}
 

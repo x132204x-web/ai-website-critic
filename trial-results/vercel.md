@@ -27,21 +27,21 @@ The hero is distinctive without ornamental clutter. Customer stories are embedde
 
 ## Prioritized findings
 
-### [High] Runtime weight contradicts the visual simplicity
+### **[P1] Runtime weight contradicts the visual simplicity**
 
 **Observed:** Lighthouse scored performance at 59, measured 18.6 s of main-thread work and 14.9 s of JavaScript execution, and estimated 425 KiB of unused JavaScript.  
 **What is wrong:** A sparse landing page carries application-scale execution cost.  
 **Why it matters:** **Inference:** The delay weakens the felt quality of an infrastructure brand built around speed and operational excellence.  
 **How to improve:** Defer noncritical interactive modules, split below-fold customer experiences, and render the hero and first proof with the smallest possible client bundle.
 
-### [High] Mobile zoom is artificially constrained
+### **[P1] Mobile zoom is artificially constrained**
 
 **Observed:** Lighthouse found a viewport setting that disables or restricts user scaling.  
 **What is wrong:** The page limits a basic browser accessibility control.  
 **Why it matters:** Users who need magnification cannot adapt the dense technical labels to their reading needs.  
 **How to improve:** Remove `user-scalable=no` and any restrictive maximum-scale value, then test zoomed layouts at 200% and 400%.
 
-### [Medium] The technical proof requires too much decoding
+### **[P2] The technical proof requires too much decoding**
 
 **Observed:** Customer sections pair strong outcome headlines with compact all-caps feature lists such as “durable orchestration” and “AI model gateway.”  
 **What is wrong:** The feature labels explain implementation, but not the specific risk or effort removed for the buyer.  

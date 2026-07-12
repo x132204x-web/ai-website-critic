@@ -30,10 +30,12 @@ Do not calculate false precision. Explain the two or three factors that most inf
 
 Use this compact structure:
 
-**[Severity] Finding title**  
+### **[P0–P3] Finding title**
 **Observed:** Exact screenshot, viewport, text, metric, or behavior.  
 **What is wrong:** Precise diagnosis.  
 **Why it matters:** Consequence, with behavioral claims labeled as inference.  
 **How to improve:** Concrete change and intended outcome.
 
 Avoid generic advice such as “improve hierarchy,” “make it pop,” or “add social proof” without identifying the exact element, placement, content, and reason.
+
+Use P0 only for genuine blockers or severe harm, P1 for high-impact product problems, P2 for meaningful non-blocking friction, and P3 for optional polish. Prefer a small number of well-supported findings. Do not manufacture a P0 to fill every level.

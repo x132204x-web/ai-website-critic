@@ -74,6 +74,7 @@ The output contains `manifest.json`, `page-data.json`, `lighthouse.json`, `evide
 - Direct evidence separated from inference
 - Strengths preserved, not ignored
 - Consequential findings prioritized over exhaustive nitpicks
+- P0–P3 priority labels with highlighted action summaries
 - Concrete “what / why / how” recommendations
 - No imitation of or claimed affiliation with any named design company
 

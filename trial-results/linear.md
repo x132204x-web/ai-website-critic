@@ -27,21 +27,21 @@ The page behaves like a product argument rather than a feature catalog. Desktop 
 
 ## Prioritized findings
 
-### [High] The flagship visual arrives too slowly
+### **[P1] The flagship visual arrives too slowly**
 
 **Observed:** Lighthouse measured 16.8 s LCP, reported the LCP image as lazily loaded, and flagged main-thread work and image delivery.  
 **What is wrong:** The hero's primary proof—the interface image—is technically deprioritized even though it carries much of the positioning.  
 **Why it matters:** **Inference:** A slow first proof delays comprehension and makes a premium, speed-oriented product feel less responsive than its promise.  
 **How to improve:** Load the hero asset eagerly with explicit priority, ship a correctly sized modern format, and reduce work required before its first render.
 
-### [High] Polished visuals conceal accessibility debt
+### **[P1] Polished visuals conceal accessibility debt**
 
 **Observed:** Lighthouse identified unnamed buttons and links, insufficient contrast, and non-sequential headings; accessibility scored 85.  
 **What is wrong:** Semantic and contrast defects sit beneath an experience that otherwise appears carefully resolved.  
 **Why it matters:** These issues obstruct assistive-technology users and weaken keyboard/screen-reader comprehension of the product narrative.  
 **How to improve:** Give every control an accessible name, audit muted text tokens against WCAG contrast, and align heading levels with the visible section hierarchy.
 
-### [Medium] Mobile product detail becomes visually repetitive
+### **[P2] Mobile product detail becomes visually repetitive**
 
 **Observed:** The mobile screenshot stacks multiple dark interface panels and similarly weighted copy blocks across a very long page.  
 **What is wrong:** Repetition reduces the contrast between distinct stages of the product story.  

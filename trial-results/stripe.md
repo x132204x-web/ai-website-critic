@@ -27,21 +27,21 @@ The hero establishes a commercial outcome rather than describing payment primiti
 
 ## Prioritized findings
 
-### [High] Redirect and document latency delay the value proposition
+### **[P1] Redirect and document latency delay the value proposition**
 
 **Observed:** The request redirected to `stripe.com/zh-sg`; Lighthouse estimated 2.71 s savings from redirects and 1.16 s from document latency. Performance scored 60.  
 **What is wrong:** Locale selection introduces costly delay before the localized page can begin presenting its promise.  
 **Why it matters:** **Inference:** International visitors experience friction before receiving the benefit of localization, particularly on slower mobile networks.  
 **How to improve:** Resolve locale at the edge in one hop, cache the decision appropriately, and eliminate avoidable redirect chains.
 
-### [Medium] Mobile length weakens later-page attention
+### **[P2] Mobile length weakens later-page attention**
 
 **Observed:** The mobile screenshot is exceptionally long, with extensive whitespace and many similarly weighted platform and resource blocks.  
 **What is wrong:** The content model transfers desktop breadth to a narrow viewport without enough progressive disclosure.  
 **Why it matters:** **Inference:** Visitors may miss later trust and conversion content because the journey demands sustained scrolling without clear stage changes.  
 **How to improve:** Prioritize the most relevant use cases, collapse secondary platform detail, and add stronger section summaries or anchored navigation for deeper exploration.
 
-### [Medium] DOM scale adds cost to an already long narrative
+### **[P2] DOM scale adds cost to an already long narrative**
 
 **Observed:** Lighthouse reported 1,781 DOM elements and a 6.2 s LCP.  
 **What is wrong:** The page's structural breadth increases rendering cost alongside its visual length.  

@@ -6,7 +6,19 @@
 
 ## Executive verdict
 
-Atlas Projects looks credible at first glance, but it asks visitors to understand the interface before clearly explaining the product. The page's strongest asset is its restrained visual system. Its largest product risk is message hierarchy: feature detail competes with the core promise, weakening the path to the trial call to action.
+> **Verdict:** Atlas Projects looks credible, but it asks visitors to understand the interface before clearly explaining the product.
+>
+> **Most important action:** Rewrite the hero around the user outcome, then use one interface moment as proof.
+
+**No P0 issue found.** The two P1 findings below should lead the next iteration.
+
+## Priority snapshot
+
+| Priority | Finding | Impact | Recommended action |
+| --- | --- | --- | --- |
+| **P1** | Hero leads with mechanism | Slows comprehension | Lead with audience and outcome |
+| **P1** | CTA lacks decision support | Adds commitment uncertainty | State trial terms beside CTA |
+| **P2** | Weak mobile text contrast | Reduces readability | Raise type size and contrast |
 
 ## Scorecard
 
@@ -27,21 +39,21 @@ The compact navigation, consistent spacing rhythm, and limited palette create a 
 
 ## Prioritized findings
 
-### [High] The hero explains the mechanism before the outcome
+### **[P1] The hero explains the mechanism before the outcome**
 
 **Observed:** In the fictional desktop screenshot, the headline says “One workspace for every project signal,” while three dashboard panels occupy more visual area than the supporting copy.  
 **What is wrong:** “Project signal” is internal product language and the interface preview does not resolve what improves for the user.  
 **Why it matters:** **Inference:** New visitors must translate the terminology before deciding whether the product is relevant, likely weakening engagement with the trial action.  
 **How to improve:** Lead with the concrete outcome and audience—such as helping product teams spot delivery risks earlier—then use the interface preview as proof of that promise.
 
-### [High] The primary call to action lacks decision support
+### **[P1] The primary call to action lacks decision support**
 
 **Observed:** “Start free” appears twice before pricing, setup expectations, or a description of the trial.  
 **What is wrong:** The action is prominent, but the page has not answered the practical questions attached to it.  
 **Why it matters:** **Inference:** Visitors with intent may postpone action because cost, commitment, and setup effort remain unclear.  
 **How to improve:** Add a short reassurance line beside the first action—trial duration, no-card policy, and typical setup time—and introduce a product tour as the lower-commitment secondary path.
 
-### [Medium] Secondary text loses contrast on mobile
+### **[P2] Secondary text loses contrast on mobile**
 
 **Observed:** The synthetic accessibility audit flags insufficient contrast, and the fictional mobile screenshot shows gray 14 px copy on a tinted panel.  
 **What is wrong:** Supporting explanations are visually de-emphasized beyond comfortable reading.  
@@ -60,7 +72,7 @@ Synthetic scores: Performance 86, Accessibility 91, Best Practices 96, SEO 100. 
 
 Preserve the restrained visual system. Rebuild the page around a single narrative: the delivery risk teams cannot see, how Atlas reveals it, evidence that the signal is reliable, and a low-risk way to try it. Reduce the hero preview to one annotated product moment instead of three equally weighted panels.
 
-## Quick wins
+## Immediate actions
 
 1. Replace the abstract headline with an audience-and-outcome statement.
 2. Add trial conditions beside the first call to action.

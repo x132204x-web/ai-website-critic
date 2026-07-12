@@ -38,15 +38,19 @@ If capture or Lighthouse fails, retain successful artifacts, state the limitatio
 
 ## Prioritize findings
 
-- **Critical**: blocks the main task, makes the offer unintelligible, or creates serious accessibility/trust risk.
-- **High**: materially harms comprehension, confidence, or conversion for many users.
-- **Medium**: creates friction or inconsistency but does not block the main task.
-- **Low**: polish opportunity with limited product impact.
+- **P0 — blocker**: blocks the primary task, causes severe accessibility/security/trust harm, or makes the product unusable. Use rarely and only with direct evidence.
+- **P1 — high impact**: materially harms comprehension, confidence, conversion, or a core user journey for many users.
+- **P2 — meaningful improvement**: creates recurring friction or inconsistency but does not block the primary task.
+- **P3 — polish**: limited-impact refinement. Omit P3 items when they distract from more important work.
+
+Never inflate severity. State explicitly when no P0 issue was found. Sort findings by priority, then expected impact.
 
 For every substantive finding, explicitly include:
 
 1. **What is wrong** — the precise issue and evidence.
 2. **Why it matters** — user or business consequence; mark inference as such.
 3. **How to improve** — a specific design or content direction, not a vague instruction.
+
+Make the report scannable: begin with a highlighted verdict and a 3–5 row priority table; bold the priority, finding title, key metric, and recommended action. Keep the main report concise, moving supporting detail into the finding evidence rather than repeating it across sections.
 
 Do not claim affiliation with or imitate Apple, Linear, Stripe, Vercel, or any other company. Use the rigor, restraint, clarity, and product thinking expected from excellent contemporary design teams.
