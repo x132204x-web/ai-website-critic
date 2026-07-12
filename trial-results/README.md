@@ -5,5 +5,6 @@ These reports were generated on July 12, 2026 from public homepages using AI Web
 - [Linear](linear.md)
 - [Vercel](vercel.md)
 - [Stripe](stripe.md)
+- [FinalACE（中文）](finalace.md)
 
 Raw screenshots and JSON stay under the gitignored `audits/` directory because they are bulky, time-sensitive third-party artifacts. Each report identifies the observations used from those artifacts.
