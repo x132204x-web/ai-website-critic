@@ -1,6 +1,6 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { artifactPaths, normalizeLighthouseResult, renderEvidence, validateUrl } from "../src/lib.js";
+import { artifactPaths, normalizeLighthouseResult, renderEvidence, renderJourneyEvidence, validateJourneySpec, validateUrl } from "../src/lib.js";
 
 describe("validateUrl", () => {
   it("accepts HTTP(S)", () => expect(validateUrl("https://example.com/a").hostname).toBe("example.com"));
@@ -27,4 +27,20 @@ it("renders explicit evidence language", () => {
   const markdown = renderEvidence("https://example.com", [], { requestedUrl: "https://example.com", fetchedAt: "now", scores: { performance: 90 }, findings: [] });
   expect(markdown).toContain("Deterministic evidence only");
   expect(markdown).toContain("| performance | 90 |");
+});
+
+it("validates a journey and rejects embedded incomplete fill steps", () => {
+  const valid = validateJourneySpec({ name: "Signup", persona: "New visitor", scenario: "Comparing tools", goal: "Reach signup", successCriteria: ["Signup is visible"], steps: [{ name: "Open", action: "goto", path: "/" }] });
+  expect(valid.name).toBe("Signup");
+  expect(() => validateJourneySpec({ ...valid, steps: [{ name: "Email", action: "fill", selector: "input" }] })).toThrow("requires value");
+});
+
+it("renders a plain journey timeline", () => {
+  const markdown = renderJourneyEvidence({
+    spec: { name: "Visit", persona: "Student", scenario: "Exam soon", goal: "Find help", successCriteria: ["Find CTA"] },
+    startedAt: "start", completedAt: "end", status: "completed", consoleIssues: [], requestFailures: [],
+    steps: [{ index: 1, name: "Arrive", action: "goto", status: "completed", startedAt: "start", durationMs: 10, url: "https://example.com", screenshot: "screenshots/journey/01-arrive.png" }]
+  });
+  expect(markdown).toContain("Student");
+  expect(markdown).toContain("User thoughts and emotions remain hypotheses");
 });

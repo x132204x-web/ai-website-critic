@@ -5,19 +5,20 @@ description: Review public websites as an evidence-led senior product designer a
 
 # AI Website Critic
 
-Evaluate whether the website is a good product, not merely whether it passes automated checks.
+Evaluate whether the website helps a real person complete a meaningful task, not merely whether it passes automated checks.
 
 ## Run the audit
 
-1. Confirm the user supplied a public HTTP(S) URL. State that authenticated and multi-page flows are outside this skill's default scope.
-2. Locate this skill's repository root. Run `npm install` and `npx playwright install chromium` only when dependencies are missing.
-3. Run `npm run audit -- <url> --output <audit-directory>`. Add viewport or timeout flags only when needed.
-4. Read `manifest.json`, `page-data.json`, `lighthouse.json`, and `evidence.md`.
-5. Inspect every screenshot visually. Never infer visual quality from Lighthouse alone.
-6. Read [prompts/critic.md](prompts/critic.md) before analyzing. Read [prompts/report.md](prompts/report.md) before writing.
-7. Write the completed review from [assets/report-template.md](assets/report-template.md). Replace every placeholder and remove empty sections.
+1. Confirm the user supplied an HTTP(S) URL and identify whether the review is a page review or a user-journey review. Prefer the journey review when interaction is possible.
+2. Read [prompts/journey.md](prompts/journey.md). Define a concrete persona, situation, goal, concerns, success criteria, and 3–8 meaningful moments.
+3. Create a journey JSON matching the repository example. Use `valueFromEnv` for approved test credentials. Do not automate purchases, destructive actions, external messages, or production data changes without explicit authorization.
+4. Locate this skill's repository root. Run `npm install` and `npx playwright install chromium` only when dependencies are missing.
+5. Run `npm run audit -- <url> --journey <journey.json> --output <audit-directory>`. Omit `--journey` only for a deliberately static page review.
+6. Read all manifest artifacts, including `journey.json` and `journey.md` when present. Inspect every screenshot visually.
+7. Read [prompts/critic.md](prompts/critic.md) before analyzing and [prompts/report.md](prompts/report.md) before writing.
+8. Write the completed review from [assets/report-template.md](assets/report-template.md). Replace every placeholder and remove empty sections.
 
-If capture or Lighthouse fails, retain successful artifacts, state the limitation, and continue only when enough direct evidence remains. Never invent a score, interaction, page state, or visual observation.
+If a journey step fails, treat the failure as evidence, preserve later steps as skipped, and explain the limitation. Never invent a score, interaction, page state, user feeling, or visual observation.
 
 ## Evaluate in this order
 
@@ -35,6 +36,7 @@ If capture or Lighthouse fails, retain successful artifacts, state the limitatio
 - Cite the viewport and artifact for visual findings; cite the audit name or score for technical findings.
 - Treat aesthetics as supporting comprehension, trust, and intent—not as taste alone.
 - Acknowledge strengths worth preserving before proposing changes.
+- Separate **browser fact**, **likely user question**, and **design inference**. A simulated persona is an evaluation lens, not a real research participant.
 
 ## Prioritize findings
 

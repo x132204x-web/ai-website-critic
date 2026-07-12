@@ -1,62 +1,66 @@
-# Product Design Review: {{site}}
+# User Journey Review: {{product}}
 
-**Reviewed:** {{date}}  
-**Scope:** {{scope}}  
+**Reviewed:** {{date}}
+**Journey:** {{journey_name}}
 **Evidence:** {{artifacts_and_limitations}}
 
-## Executive verdict
+## The person and their task
 
-> **Verdict:** {{concise_product_judgment}}
+**Persona:** {{specific_persona}}
+**Situation:** {{real_world_scenario}}
+**Goal:** {{one_outcome}}
+**Success means:** {{observable_success_criteria}}
+
+> This is a simulated journey used as an evaluation lens, not a real usability-test participant.
+
+## Bottom line
+
+> **Verdict:** {{plain_language_judgment}}
 >
 > **Most important action:** {{single_highest_leverage_action}}
 
-**No P0 issue found.** {{or_replace_with_p0_warning}}
+**{{p0_status}}**
 
 ## Priority snapshot
 
-| Priority | Finding | Impact | Recommended action |
+| Priority | What the person runs into | Why it matters | Recommended action |
 | --- | --- | --- | --- |
-| **P1** | | | |
 | **P1** | | | |
 | **P2** | | | |
 
-## Scorecard
+## Journey at a glance
 
-| Dimension | Score | Rationale |
-| --- | ---: | --- |
-| Positioning and clarity | /10 | |
-| Visual hierarchy | /10 | |
-| Aesthetic coherence | /10 | |
-| Usability and information architecture | /10 | |
-| Conversion effectiveness | /10 | |
-| Trust and credibility | /10 | |
-| Accessibility and responsiveness | /10 | |
-| Technical quality | /10 | |
+| Moment | What the person is trying to do | Experience | State |
+| --- | --- | --- | --- |
+| | | | Clear / Friction / Blocked |
 
-## What is working
+## What worked well
 
 {{strengths_to_preserve}}
 
-## Prioritized findings
+## Journey replay
 
-{{findings_using_observed_what_why_how}}
+{{chronological_story_using_browser_evidence}}
 
-## Conversion-flow analysis
+## Priority findings
 
-{{journey_and_friction}}
+### **[P1] {{finding_in_user_language}}**
 
-## Technical and accessibility signals
+**What happened:** {{direct_evidence}}
+**Likely user question:** “{{plain_language_question}}”
+**Why it matters:** {{clearly_labeled_inference}}
+**Recommended change:** {{specific_action}}
 
-{{lighthouse_console_and_request_evidence}}
+## Technical signals that affected the journey
 
-## Recommended redesign direction
+{{only_relevant_metrics_errors_and_accessibility_findings}}
 
-{{coherent_direction}}
+## Action plan
 
-## Immediate actions
+### Do now
 
-{{ordered_quick_wins}}
+{{three_or_fewer_actions}}
 
-## Longer-term improvements
+### Learn next
 
-{{ordered_structural_work}}
+{{research_or_structural_work}}

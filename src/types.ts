@@ -30,3 +30,50 @@ export interface LighthouseSummary {
   findings: LighthouseFinding[];
   error?: string;
 }
+
+export type JourneyAction = "goto" | "click" | "fill" | "waitFor" | "assertText" | "screenshot";
+
+export interface JourneyStepSpec {
+  name: string;
+  action: JourneyAction;
+  selector?: string;
+  value?: string;
+  valueFromEnv?: string;
+  path?: string;
+  text?: string;
+  note?: string;
+}
+
+export interface JourneySpec {
+  name: string;
+  persona: string;
+  scenario: string;
+  goal: string;
+  successCriteria: string[];
+  viewport?: ViewportName;
+  steps: JourneyStepSpec[];
+}
+
+export interface JourneyStepResult {
+  index: number;
+  name: string;
+  action: JourneyAction;
+  status: "completed" | "failed" | "skipped";
+  startedAt: string;
+  durationMs: number;
+  url: string;
+  title?: string;
+  screenshot?: string;
+  note?: string;
+  error?: string;
+}
+
+export interface JourneyResult {
+  spec: Omit<JourneySpec, "steps">;
+  startedAt: string;
+  completedAt: string;
+  status: "completed" | "failed";
+  steps: JourneyStepResult[];
+  consoleIssues: ConsoleIssue[];
+  requestFailures: RequestFailure[];
+}

@@ -5,13 +5,14 @@ import process from "node:process";
 import { launch } from "chrome-launcher";
 import lighthouse from "lighthouse";
 import { chromium } from "playwright";
-import { artifactPaths, normalizeLighthouseResult, renderEvidence, validateUrl } from "./lib.js";
-import type { LighthouseSummary, PageCapture, ViewportName } from "./types.js";
+import { runJourney } from "./journey.js";
+import { artifactPaths, normalizeLighthouseResult, renderEvidence, renderJourneyEvidence, validateJourneySpec, validateUrl } from "./lib.js";
+import type { JourneySpec, LighthouseSummary, PageCapture, ViewportName } from "./types.js";
 
-interface Options { url: URL; output: string; timeout: number; viewports: ViewportName[] }
+interface Options { url: URL; output: string; timeout: number; viewports: ViewportName[]; journeyFile?: string }
 
 function usage(): never {
-  console.error("Usage: npm run audit -- <url> [--output <dir>] [--desktop-only|--mobile-only] [--timeout <ms>]");
+  console.error("Usage: npm run audit -- <url> [--output <dir>] [--journey <spec.json>] [--desktop-only|--mobile-only] [--timeout <ms>]");
   process.exit(1);
 }
 
@@ -21,9 +22,11 @@ export function parseArgs(args: string[]): Options {
   let output = path.resolve("audits", `${url.hostname}-${new Date().toISOString().replaceAll(":", "-")}`);
   let timeout = 30_000;
   let viewports: ViewportName[] = ["desktop", "mobile"];
+  let journeyFile: string | undefined;
   for (let i = 1; i < args.length; i++) {
     const arg = args[i];
     if (arg === "--output") output = path.resolve(args[++i] ?? usage());
+    else if (arg === "--journey") journeyFile = path.resolve(args[++i] ?? usage());
     else if (arg === "--timeout") {
       timeout = Number(args[++i]);
       if (!Number.isFinite(timeout) || timeout <= 0) throw new Error("--timeout must be a positive number");
@@ -31,7 +34,7 @@ export function parseArgs(args: string[]): Options {
     else if (arg === "--mobile-only") viewports = ["mobile"];
     else throw new Error(`Unknown option: ${arg}`);
   }
-  return { url, output, timeout, viewports };
+  return { url, output, timeout, viewports, journeyFile };
 }
 
 async function capture(browser: Awaited<ReturnType<typeof chromium.connectOverCDP>>, name: ViewportName, url: string, file: string, timeout: number): Promise<PageCapture> {
@@ -57,7 +60,10 @@ async function capture(browser: Awaited<ReturnType<typeof chromium.connectOverCD
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
-  const paths = artifactPaths(options.output, options.viewports);
+  const journeySpec: JourneySpec | undefined = options.journeyFile
+    ? validateJourneySpec(JSON.parse(await fs.readFile(options.journeyFile, "utf8")))
+    : undefined;
+  const paths = artifactPaths(options.output, options.viewports, Boolean(journeySpec));
   await fs.mkdir(path.join(options.output, "screenshots"), { recursive: true });
   let chrome: Awaited<ReturnType<typeof launch>> | undefined;
   let browser: Awaited<ReturnType<typeof chromium.connectOverCDP>> | undefined;
@@ -67,6 +73,11 @@ async function main() {
     chrome = await launch({ chromePath: chromium.executablePath(), chromeFlags: ["--headless", "--no-sandbox", "--disable-gpu"] });
     browser = await chromium.connectOverCDP(`http://127.0.0.1:${chrome.port}`);
     for (const name of options.viewports) pages.push(await capture(browser, name, options.url.href, paths.screenshots[name], options.timeout));
+    if (journeySpec && paths.journey && paths.journeyEvidence) {
+      const result = await runJourney(browser, options.url.href, journeySpec, options.output, options.timeout);
+      await fs.writeFile(paths.journey, JSON.stringify(result, null, 2));
+      await fs.writeFile(paths.journeyEvidence, renderJourneyEvidence(result));
+    }
     try {
       const raw = await lighthouse(options.url.href, {
         port: chrome.port,
@@ -86,7 +97,7 @@ async function main() {
   await fs.writeFile(paths.pageData, JSON.stringify({ requestedUrl: options.url.href, captures: pages }, null, 2));
   await fs.writeFile(paths.lighthouse, JSON.stringify(lighthouseSummary, null, 2));
   await fs.writeFile(paths.evidence, renderEvidence(options.url.href, pages, lighthouseSummary));
-  await fs.writeFile(paths.manifest, JSON.stringify({ version: 1, requestedUrl: options.url.href, createdAt: new Date().toISOString(), artifacts: { pageData: "page-data.json", lighthouse: "lighthouse.json", evidence: "evidence.md", screenshots: Object.fromEntries(options.viewports.map((name) => [name, `screenshots/${name}.png`])) } }, null, 2));
+  await fs.writeFile(paths.manifest, JSON.stringify({ version: 2, requestedUrl: options.url.href, createdAt: new Date().toISOString(), artifacts: { pageData: "page-data.json", lighthouse: "lighthouse.json", evidence: "evidence.md", ...(journeySpec ? { journey: "journey.json", journeyEvidence: "journey.md" } : {}), screenshots: Object.fromEntries(options.viewports.map((name) => [name, `screenshots/${name}.png`])) } }, null, 2));
   console.log(`Audit evidence written to ${options.output}`);
 }
 

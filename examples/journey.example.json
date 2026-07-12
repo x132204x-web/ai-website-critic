@@ -1,0 +1,18 @@
+{
+  "name": "First-time visitor evaluates the product",
+  "persona": "A time-poor first-time visitor who has never used the product",
+  "scenario": "They found the homepage while comparing ways to complete an urgent task",
+  "goal": "Understand the offer, assess trust and cost, then reach the start of signup",
+  "successCriteria": [
+    "The visitor can explain the product and audience",
+    "The visitor can find pricing or commitment information",
+    "The primary call to action reaches the expected next step"
+  ],
+  "viewport": "mobile",
+  "steps": [
+    { "name": "Arrive on homepage", "action": "goto", "path": "/", "note": "What does the visitor understand in five seconds?" },
+    { "name": "Confirm the main promise", "action": "assertText", "text": "product" },
+    { "name": "Open the primary action", "action": "click", "selector": "a[href*='signup'], a[href*='login'], button" },
+    { "name": "Inspect the next step", "action": "screenshot", "note": "Does this match the promise made by the CTA?" }
+  ]
+}

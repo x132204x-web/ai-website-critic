@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { LighthouseFinding, LighthouseSummary, PageCapture, ViewportName } from "./types.js";
+import type { JourneyResult, JourneySpec, LighthouseFinding, LighthouseSummary, PageCapture, ViewportName } from "./types.js";
 
 export function validateUrl(input: string): URL {
   let url: URL;
@@ -10,14 +10,40 @@ export function validateUrl(input: string): URL {
   return url;
 }
 
-export function artifactPaths(output: string, viewports: ViewportName[]) {
+export function artifactPaths(output: string, viewports: ViewportName[], hasJourney = false) {
   return {
     manifest: path.join(output, "manifest.json"),
     pageData: path.join(output, "page-data.json"),
     lighthouse: path.join(output, "lighthouse.json"),
     evidence: path.join(output, "evidence.md"),
-    screenshots: Object.fromEntries(viewports.map((name) => [name, path.join(output, "screenshots", `${name}.png`)]))
+    screenshots: Object.fromEntries(viewports.map((name) => [name, path.join(output, "screenshots", `${name}.png`)])),
+    ...(hasJourney ? { journey: path.join(output, "journey.json"), journeyEvidence: path.join(output, "journey.md") } : {})
   };
+}
+
+export function validateJourneySpec(input: unknown): JourneySpec {
+  const spec = input as Partial<JourneySpec>;
+  if (!spec || typeof spec !== "object") throw new Error("Journey spec must be a JSON object");
+  for (const field of ["name", "persona", "scenario", "goal"] as const) {
+    if (typeof spec[field] !== "string" || !spec[field]?.trim()) throw new Error(`Journey spec requires ${field}`);
+  }
+  if (!Array.isArray(spec.successCriteria) || !spec.successCriteria.length) throw new Error("Journey spec requires successCriteria");
+  if (!Array.isArray(spec.steps) || !spec.steps.length) throw new Error("Journey spec requires steps");
+  const actions = new Set(["goto", "click", "fill", "waitFor", "assertText", "screenshot"]);
+  spec.steps.forEach((step, index) => {
+    if (!step?.name || !actions.has(step.action)) throw new Error(`Invalid journey step at index ${index}`);
+    if (["click", "fill", "waitFor"].includes(step.action) && !step.selector) throw new Error(`Step ${index + 1} requires selector`);
+    if (step.action === "fill" && !step.value && !step.valueFromEnv) throw new Error(`Fill step ${index + 1} requires value or valueFromEnv`);
+    if (step.action === "assertText" && !step.text) throw new Error(`Assert step ${index + 1} requires text`);
+  });
+  if (spec.viewport && !["desktop", "mobile"].includes(spec.viewport)) throw new Error("Journey viewport must be desktop or mobile");
+  return spec as JourneySpec;
+}
+
+export function renderJourneyEvidence(result: JourneyResult): string {
+  const criteria = result.spec.successCriteria.map((item) => `- ${item}`).join("\n");
+  const rows = result.steps.map((step) => `| ${step.index} | ${escapeCell(step.name)} | ${step.status} | ${step.durationMs} | ${escapeCell(step.url)} | ${escapeCell(step.screenshot)} | ${escapeCell(step.error)} |`).join("\n");
+  return `# User Journey Evidence\n\n> This file records browser actions and outcomes. User thoughts and emotions remain hypotheses until validated through research.\n\n## Participant frame\n\n- **Persona:** ${result.spec.persona}\n- **Scenario:** ${result.spec.scenario}\n- **Goal:** ${result.spec.goal}\n- **Journey status:** ${result.status}\n\n## Success criteria\n\n${criteria}\n\n## Timeline\n\n| Step | Moment | Status | Duration (ms) | URL | Screenshot | Error |\n| ---: | --- | --- | ---: | --- | --- | --- |\n${rows}\n\n## Runtime signals\n\n- Console issues: ${result.consoleIssues.length}\n- Failed requests: ${result.requestFailures.length}\n`;
 }
 
 export function normalizeLighthouseResult(raw: any, requestedUrl: string): LighthouseSummary {

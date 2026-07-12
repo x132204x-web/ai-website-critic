@@ -1,20 +1,19 @@
 # Report requirements
 
-Write for the product owner and the team that will implement the improvements. Make the verdict understandable before the detailed findings.
+Write for a product owner who is not a design specialist. Use plain language and let the reader follow the experience in chronological order. Explain design terminology only when it changes the decision.
 
 Include, in order:
 
-1. Review context and evidence limitations
+1. Participant frame, scenario, task, and evidence limitations
 2. Highlighted executive verdict
 3. Priority snapshot table with P0–P3 labels, impact, and recommended action
-4. Scorecard
-5. What is working
-6. Prioritized findings
-7. Conversion-flow analysis
-8. Technical and accessibility signals
-9. Recommended redesign direction
-10. Action plan split into immediate and longer-term work
+4. Journey at a glance using Clear / Friction / Blocked states
+5. What worked well
+6. Chronological journey replay
+7. Prioritized findings written in user language
+8. Technical signals that materially affected the journey
+9. Action plan split into immediate and longer-term work
 
-Use Markdown blockquotes for the verdict and the single most important recommendation. Use bold selectively for priorities, key metrics, and actions; do not bold whole paragraphs. Keep recommendations internally consistent. Preserve identified strengths. Distinguish observed facts from inference and do not repeat one issue across multiple sections. Prefer 4–7 consequential findings to an exhaustive list of minor defects. State “No P0 issue found” when appropriate.
+Use Markdown blockquotes for the verdict and the single most important recommendation. Use bold selectively for priorities, key metrics, and actions; do not bold whole paragraphs. In each finding prefer “What happened / Likely user question / Why it matters / Recommended change.” Keep recommendations internally consistent and avoid repeating an issue. Prefer 3–5 consequential findings. State “No P0 issue found” when appropriate.
 
-The redesign direction should describe principles, hierarchy, content, and interaction changes—not copy another brand's visual identity. Immediate actions should be feasible without rethinking the product. Longer-term work may involve research, positioning, information architecture, or design-system changes.
+Do not present the simulated persona as user research. End with the smallest coherent set of actions that would improve the journey.
