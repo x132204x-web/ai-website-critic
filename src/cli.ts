@@ -2,6 +2,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { pathToFileURL } from "node:url";
 import { launch } from "chrome-launcher";
 import lighthouse from "lighthouse";
 import { chromium } from "playwright";
@@ -9,10 +10,10 @@ import { runJourney } from "./journey.js";
 import { artifactPaths, normalizeLighthouseResult, renderEvidence, renderJourneyEvidence, validateJourneySpec, validateUrl } from "./lib.js";
 import type { JourneySpec, LighthouseSummary, PageCapture, ViewportName } from "./types.js";
 
-interface Options { url: URL; output: string; timeout: number; viewports: ViewportName[]; journeyFile?: string }
+interface Options { url: URL; output: string; timeout: number; viewports: ViewportName[]; journeyFile?: string; pageOnly: boolean }
 
 function usage(): never {
-  console.error("Usage: npm run audit -- <url> [--output <dir>] [--journey <spec.json>] [--desktop-only|--mobile-only] [--timeout <ms>]");
+  console.error("Usage: npm run audit -- <url> --journey <spec.json> [--output <dir>] [--desktop-only|--mobile-only] [--timeout <ms>]\nEvidence-only fallback: add --page-only instead of --journey.");
   process.exit(1);
 }
 
@@ -23,10 +24,12 @@ export function parseArgs(args: string[]): Options {
   let timeout = 30_000;
   let viewports: ViewportName[] = ["desktop", "mobile"];
   let journeyFile: string | undefined;
+  let pageOnly = false;
   for (let i = 1; i < args.length; i++) {
     const arg = args[i];
     if (arg === "--output") output = path.resolve(args[++i] ?? usage());
     else if (arg === "--journey") journeyFile = path.resolve(args[++i] ?? usage());
+    else if (arg === "--page-only") pageOnly = true;
     else if (arg === "--timeout") {
       timeout = Number(args[++i]);
       if (!Number.isFinite(timeout) || timeout <= 0) throw new Error("--timeout must be a positive number");
@@ -34,7 +37,9 @@ export function parseArgs(args: string[]): Options {
     else if (arg === "--mobile-only") viewports = ["mobile"];
     else throw new Error(`Unknown option: ${arg}`);
   }
-  return { url, output, timeout, viewports, journeyFile };
+  if (journeyFile && pageOnly) throw new Error("Use either --journey or --page-only, not both");
+  if (!journeyFile && !pageOnly) throw new Error("A complete review requires --journey. Use --page-only only for evidence collection.");
+  return { url, output, timeout, viewports, journeyFile, pageOnly };
 }
 
 async function capture(browser: Awaited<ReturnType<typeof chromium.connectOverCDP>>, name: ViewportName, url: string, file: string, timeout: number): Promise<PageCapture> {
@@ -58,7 +63,7 @@ async function capture(browser: Awaited<ReturnType<typeof chromium.connectOverCD
   return result;
 }
 
-async function main() {
+export async function main() {
   const options = parseArgs(process.argv.slice(2));
   const journeySpec: JourneySpec | undefined = options.journeyFile
     ? validateJourneySpec(JSON.parse(await fs.readFile(options.journeyFile, "utf8")))
@@ -101,4 +106,6 @@ async function main() {
   console.log(`Audit evidence written to ${options.output}`);
 }
 
-main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });
+}

@@ -1,6 +1,6 @@
 {
   "name": "ai-website-critic",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Evidence collector and reusable AI skill for senior-level website product design critiques.",
   "license": "MIT",
   "type": "module",
@@ -9,7 +9,7 @@
     "audit": "tsx src/cli.ts",
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run tests/lib.test.ts",
+    "test": "vitest run tests/*.test.ts",
     "test:integration": "vitest run tests/integration",
     "check": "npm run typecheck && npm test"
   },

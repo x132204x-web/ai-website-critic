@@ -1,0 +1,16 @@
+{
+  "name": "A technical founder evaluates Vercel for an AI product",
+  "persona": "A technical founder preparing to ship an AI application with agents, background jobs, and unpredictable traffic",
+  "scenario": "The founder knows Vercel for frontend deployment but is unsure whether its new agent infrastructure claim covers the full production workload",
+  "goal": "Understand the new positioning, find credible proof, and reach the first deployment step",
+  "successCriteria": ["The agentic infrastructure claim becomes concrete", "Customer proof connects capabilities to outcomes", "Deploy Now reaches an understandable next step"],
+  "viewport": "mobile",
+  "steps": [
+    { "name": "Arrive with an AI deployment problem", "action": "goto", "path": "/" },
+    { "name": "Read the category promise", "action": "assertText", "text": "Agentic Infrastructure" },
+    { "name": "Look for agent-specific proof", "action": "assertText", "text": "Build agents on infrastructure that thinks like them" },
+    { "name": "Check scale proof", "action": "assertText", "text": "Ship apps that scale from zero to millions instantly" },
+    { "name": "Attempt the first deployment", "action": "click", "selector": "a[href='/new']:visible" },
+    { "name": "Confirm the deployment handoff", "action": "assertText", "text": "Let's build something new" }
+  ]
+}

@@ -1,66 +1,112 @@
-# Product Design Review: Vercel
+# Vercel User Journey Review
 
-**Reviewed:** July 12, 2026  
-**Scope:** Public homepage, desktop and mobile  
-**Evidence:** Full-page screenshots plus one Lighthouse run. The capture contains a large blank tail after the visible content, so conclusions are limited to rendered sections.
+**Reviewed:** July 12, 2026
+**Journey:** A technical founder evaluates Vercel for an AI product
+**Device:** Mobile, 390×844
+**Tested path:** Homepage → agent proof → scale proof → Deploy Now → new project
 
-## Executive verdict
+## Who are we following?
 
-Vercel's homepage is a bold positioning move: “Agentic Infrastructure” is memorable and the customer examples make the abstract category tangible. The composition is confident, but extreme whitespace and dense technical labels place a high interpretation burden on less technical buyers. This run also shows substantial JavaScript cost for a visually sparse page.
+**Noah is a technical founder preparing to ship an AI application.** It needs agents, background work, and unpredictable scaling. He already associates Vercel with frontend deployment but is unsure whether “Agentic Infrastructure” covers his production workload.
 
-## Scorecard
+His goal is to understand the new claim, find credible technical proof, and reach a first deployment step.
 
-| Dimension | Score | Rationale |
-| --- | ---: | --- |
-| Positioning and clarity | 8/10 | Distinct category claim with a terse audience statement. |
-| Visual hierarchy | 8/10 | Strong type and composition; whitespace occasionally breaks continuity. |
-| Aesthetic coherence | 9/10 | A disciplined monochrome system supports the infrastructure message. |
-| Usability and information architecture | 7/10 | Examples clarify the offer, but feature labels remain jargon-heavy. |
-| Conversion effectiveness | 7/10 | Deploy and sales paths are clear; motivation is stronger for existing category-aware users. |
-| Trust and credibility | 9/10 | Named, high-scale customer examples do substantial proof work. |
-| Accessibility and responsiveness | 8/10 | Score 95, with zoom restriction and label-name mismatch still flagged. |
-| Technical quality | 6/10 | Performance scored 59 and main-thread work reached 18.6 seconds. |
+> This is a simulated journey, not user research. Browser actions are facts; likely questions and business effects are inferences.
 
-## What is working
+## Bottom line
 
-The hero is distinctive without ornamental clutter. Customer stories are embedded into the product explanation rather than isolated as generic logos. Mobile retains the primary actions and gives each use case enough room to read.
+> **Vercel turns a bold category statement into credible customer and scale proof, then provides an unusually direct “Deploy Now” handoff. The weak point is translation: technical labels tell Noah what the infrastructure contains, but not always which operational headache each capability removes.**
+>
+> **Most important action:** Add one plain-language consequence to each technical proof block—capability, changed workflow, and outcome.
 
-## Prioritized findings
+**No P0 issue was found.** All 6 journey steps completed, and “Deploy Now” reached a usable new-project screen.
 
-### **[P1] Runtime weight contradicts the visual simplicity**
+## Priority snapshot
 
-**Observed:** Lighthouse scored performance at 59, measured 18.6 s of main-thread work and 14.9 s of JavaScript execution, and estimated 425 KiB of unused JavaScript.  
-**What is wrong:** A sparse landing page carries application-scale execution cost.  
-**Why it matters:** **Inference:** The delay weakens the felt quality of an infrastructure brand built around speed and operational excellence.  
-**How to improve:** Defer noncritical interactive modules, split below-fold customer experiences, and render the hero and first proof with the smallest possible client bundle.
+| Priority | What Noah runs into | Why it matters | Recommended action |
+| --- | --- | --- | --- |
+| **P1** | Mobile zoom is restricted | Users who need magnification lose control | Restore browser zoom |
+| **P1** | Technical proof requires interpretation | Buyers may understand features but not value | Connect each capability to an operational outcome |
+| **P2** | The sparse page still carries avoidable runtime cost | Felt quality trails the infrastructure promise | Reduce redirects and unused client assets |
 
-### **[P1] Mobile zoom is artificially constrained**
+## Journey at a glance
 
-**Observed:** Lighthouse found a viewport setting that disables or restricts user scaling.  
-**What is wrong:** The page limits a basic browser accessibility control.  
-**Why it matters:** Users who need magnification cannot adapt the dense technical labels to their reading needs.  
-**How to improve:** Remove `user-scalable=no` and any restrictive maximum-scale value, then test zoomed layouts at 200% and 400%.
+| Moment | What Noah is trying to do | Experience | State |
+| --- | --- | --- | --- |
+| Arrive | Decide what “Agentic Infrastructure” means | Memorable category claim, limited initial explanation | **Clear but broad** |
+| Check agent support | See whether this is more than deployment branding | Notion example and agent-specific features provide proof | **Convincing** |
+| Check scale | Judge production readiness | Zapier scale story connects infrastructure to volume | **Convincing** |
+| Start deployment | See what commitment is required | “Deploy Now” opens a new-project experience | **Very clear** |
 
-### **[P2] The technical proof requires too much decoding**
+## What worked well
 
-**Observed:** Customer sections pair strong outcome headlines with compact all-caps feature lists such as “durable orchestration” and “AI model gateway.”  
-**What is wrong:** The feature labels explain implementation, but not the specific risk or effort removed for the buyer.  
-**Why it matters:** **Inference:** Decision-makers outside engineering may understand the scale claim but not why these capabilities produce it.  
-**How to improve:** Add one plain-language causal sentence to each customer proof that connects capability, changed workflow, and outcome.
+- The hero is memorable and avoids generic AI imagery.
+- Named customer examples do the explanation work rather than acting as a decorative logo wall.
+- The mobile page preserves the same proof sequence as desktop.
+- “Deploy Now” lands directly on “Let’s build something new,” with repository import, drag-and-drop, and templates visible.
 
-## Recommended redesign direction
+## Journey replay
 
-Keep the monochrome identity and category-level hero. Reduce JavaScript, make accessibility non-negotiable, and translate each technical capability into a short product consequence without diluting the expert tone.
+### 1. Noah understands the direction before the details
 
-## Quick wins
+**Browser fact:** The hero says “Agentic Infrastructure,” “For coding agents,” and offers “Deploy Now” and “Talk to Sales.”
+
+**Likely user question:** “Does this replace only hosting, or also the orchestration and runtime my agents need?”
+
+The category is clear, but the exact boundary is intentionally compressed. Noah needs the customer sections to understand the product.
+
+### 2. Customer proof makes the category credible
+
+**Browser fact:** The journey verifies “Build agents on infrastructure that thinks like them” and “Ship apps that scale from zero to millions instantly,” paired with Notion and Zapier examples.
+
+**Likely user question:** “Which Vercel capability created that outcome?”
+
+The page lists durable orchestration, sandboxed environments, AI model gateway, global delivery, and related features. These are credible to a technical audience, but the causal explanation remains terse.
+
+### 3. The deploy handoff is exceptionally direct
+
+**Browser fact:** Clicking “Deploy Now” reached `/new`, titled “New Project,” with “Let’s build something new,” repository import, file upload, and templates. All journey steps completed.
+
+**Likely user question:** “Can I try this with an existing repository right now?”
+
+The page answers yes without forcing a sales conversation or a long setup explanation.
+
+## Priority findings
+
+### **[P1] Some users cannot enlarge the dense technical content**
+
+**What happened:** Lighthouse found a viewport setting that disables or restricts user scaling.
+
+**Likely user question:** “Why can’t I zoom this small technical text?”
+
+**Why it matters:** This removes a basic accessibility control precisely where compact labels require careful reading.
+
+**Recommended change:** Remove restrictive `user-scalable` or maximum-scale settings and test the journey at 200% and 400% zoom.
+
+### **[P1] Noah sees capabilities before their practical consequences**
+
+**What happened:** Proof blocks use labels such as durable orchestration, sandboxed environments, and AI model gateway with limited explanation of changed developer work.
+
+**Likely user question:** “Which failure mode or engineering task does this remove for me?”
+
+**Recommended change:** Add one short causal sentence to every proof block: “Because Vercel provides X, your team no longer needs to Y, which enables Z.”
+
+### **[P2] Runtime details slightly weaken the infrastructure story**
+
+**What happened:** Performance scored 81. Lighthouse reported an 840 ms redirect opportunity, 4.28-second LCP, and unused CSS; the journey recorded six console issues without blocking completion.
+
+**Likely user question:** “Why does a visually sparse infrastructure page need this much work?”
+
+**Recommended change:** Remove the initial redirect where possible, defer noncritical client modules, and set a marketing-page performance budget.
+
+## Action plan
+
+### Do now
 
 1. Restore unrestricted browser zoom.
-2. Correct visible-label/accessibility-name mismatches.
-3. Remove the initial redirect where feasible.
-4. Defer unused below-fold JavaScript.
+2. Translate technical features into operational consequences.
+3. Reduce avoidable redirect and client-side cost.
 
-## Longer-term improvements
+### Learn next
 
-1. Set a client-JavaScript budget for the marketing homepage.
-2. Test customer-proof comprehension with product and business audiences.
-3. Investigate the blank captured tail and lazy-render behavior across automated and low-powered clients.
+Test the first two proof blocks with founders who know Vercel only for frontend hosting. Ask them to explain what “Agentic Infrastructure” includes and excludes.

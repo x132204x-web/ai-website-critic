@@ -53,16 +53,16 @@ Ask your agent:
 Use $ai-website-critic to review https://example.com and produce a product design critique.
 ```
 
-The skill will run the collector. You can also collect evidence directly:
-
-```sh
-npm run audit -- https://example.com --output audits/example
-```
-
-For the recommended journey mode, copy [examples/journey.example.json](examples/journey.example.json), tailor the persona and steps, then run:
+Every complete review requires a journey. Copy [examples/journey.example.json](examples/journey.example.json), then tailor the persona, scenario, success criteria, and steps:
 
 ```sh
 npm run audit -- https://example.com --journey my-journey.json --output audits/example
+```
+
+For screenshot and Lighthouse evidence without a complete review:
+
+```sh
+npm run audit -- https://example.com --page-only --output audits/example-evidence
 ```
 
 Options:
@@ -73,6 +73,7 @@ Options:
 --timeout <ms>        Set navigation timeout (default: 30000)
 --output <directory>  Choose the artifact directory
 --journey <file>      Run a scripted user journey from JSON
+--page-only           Collect static evidence without producing a complete review
 ```
 
 The output contains `manifest.json`, `page-data.json`, `lighthouse.json`, `evidence.md`, and viewport images under `screenshots/`. Journey mode also creates `journey.json`, `journey.md`, and step screenshots under `screenshots/journey/`. Partial evidence is retained when one stage fails.
@@ -102,11 +103,11 @@ python3 /path/to/skill-creator/scripts/quick_validate.py skill/ai-website-critic
 
 The integration test uses a local fixture and does not require a public website. See [example-report.md](example-report.md) for the expected review style; its evidence is explicitly fictional.
 
-Three dated, evidence-based public-site trials are available in [trial-results](trial-results/README.md). Their raw third-party screenshots remain local and gitignored.
+Four dated, journey-based public-site trials are available in [trial-results](trial-results/README.md). Their raw third-party screenshots remain local and gitignored.
 
 ## Scope
 
-The collector supports deliberate multi-step journeys, including test-account flows when credentials are supplied through environment variables. Unbounded crawling, purchases, destructive production actions, HTML/PDF export, and external LLM API adapters remain out of scope.
+Every complete review requires a deliberate multi-step journey, including public marketing pages. Test-account flows are supported when credentials are supplied through environment variables. Unbounded crawling, purchases, destructive production actions, HTML/PDF export, and external LLM API adapters remain out of scope.
 
 ## License
 

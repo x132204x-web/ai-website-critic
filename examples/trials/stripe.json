@@ -1,0 +1,16 @@
+{
+  "name": "A startup founder evaluates Stripe for global revenue",
+  "persona": "A startup founder launching a subscription AI product in several countries without a dedicated payments team",
+  "scenario": "The founder needs payments now but also expects usage billing, international expansion, and enterprise requirements later",
+  "goal": "Understand whether Stripe fits the business model, verify scale and trust, and reach account creation",
+  "successCriteria": ["The revenue promise is clear", "The founder sees relevant business-model capabilities and trust evidence", "Get started reaches account creation"],
+  "viewport": "mobile",
+  "steps": [
+    { "name": "Arrive with a global payments decision", "action": "goto", "path": "/" },
+    { "name": "Understand the commercial promise", "action": "assertText", "text": "Financial infrastructure to grow your revenue" },
+    { "name": "Check business model coverage", "action": "assertText", "text": "Flexible solutions for every business model" },
+    { "name": "Look for scale and reliability proof", "action": "assertText", "text": "The backbone of global commerce" },
+    { "name": "Attempt to start an account", "action": "click", "selector": "a[href*='dashboard.stripe.com/register']:visible" },
+    { "name": "Confirm the account handoff", "action": "assertText", "text": "Create your Stripe account" }
+  ]
+}

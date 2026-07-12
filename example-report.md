@@ -1,86 +1,87 @@
-# Product Design Review: Atlas Projects (fictional example)
+# User Journey Review: Atlas Projects (fictional example)
 
-**Reviewed:** July 12, 2026  
-**Scope:** Fictional marketing homepage; desktop and mobile  
-**Evidence:** Mock screenshots and synthetic Lighthouse results created only to demonstrate report style. No claims in this report describe a real website.
+**Journey:** A product lead evaluates Atlas for a growing team
+**Evidence:** Fictional screenshots and synthetic metrics created only to demonstrate report style. No claims describe a real website.
 
-## Executive verdict
+## Who are we following?
 
-> **Verdict:** Atlas Projects looks credible, but it asks visitors to understand the interface before clearly explaining the product.
+**Sam leads product at a 30-person company.** Work is scattered across chat, documents, and a task tracker. Sam needs to understand whether Atlas can replace that fragmentation and wants to reach a low-risk trial.
+
+> This is a simulated journey, not user research.
+
+## Bottom line
+
+> **Atlas looks credible and is easy to navigate, but Sam sees how the interface works before understanding what outcome it improves.**
 >
-> **Most important action:** Rewrite the hero around the user outcome, then use one interface moment as proof.
+> **Most important action:** Rewrite the hero around the team outcome, then use one interface moment as proof.
 
-**No P0 issue found.** The two P1 findings below should lead the next iteration.
+**No P0 issue was found.**
 
 ## Priority snapshot
 
-| Priority | Finding | Impact | Recommended action |
+| Priority | What Sam runs into | Why it matters | Recommended action |
 | --- | --- | --- | --- |
-| **P1** | Hero leads with mechanism | Slows comprehension | Lead with audience and outcome |
-| **P1** | CTA lacks decision support | Adds commitment uncertainty | State trial terms beside CTA |
-| **P2** | Weak mobile text contrast | Reduces readability | Raise type size and contrast |
+| **P1** | The hero leads with internal terminology | Sam must translate the value | Lead with audience and outcome |
+| **P1** | Trial terms appear after the first CTA | Commitment feels uncertain | State cost, card policy, and setup time beside CTA |
+| **P2** | Mobile supporting text is hard to read | Important context is easy to miss | Raise text size and contrast |
 
-## Scorecard
+## Journey at a glance
 
-| Dimension | Score | Rationale |
-| --- | ---: | --- |
-| Positioning and clarity | 5/10 | The audience is visible, but the outcome remains abstract. |
-| Visual hierarchy | 6/10 | Clean composition; competing hero elements split attention. |
-| Aesthetic coherence | 8/10 | Consistent type, color, and component treatment. |
-| Usability and information architecture | 7/10 | Navigation is compact and sections scan well. |
-| Conversion effectiveness | 5/10 | The primary action arrives before sufficient motivation. |
-| Trust and credibility | 6/10 | Customer logos help, but claims lack supporting detail. |
-| Accessibility and responsiveness | 6/10 | Mobile order is sound; secondary text contrast is weak. |
-| Technical quality | 8/10 | Synthetic Lighthouse scores are strong aside from image sizing. |
+| Moment | What Sam is trying to do | Experience | State |
+| --- | --- | --- | --- |
+| Arrive | Understand the offer | Interface is clear; outcome is abstract | **Friction** |
+| Check fit | See whether Atlas covers the workflow | Feature sequence is easy to scan | **Clear** |
+| Judge trust | Look for credible results | Logos appear, but outcomes lack detail | **Friction** |
+| Start trial | Understand the commitment | CTA is obvious; terms are not | **Friction** |
 
-## What is working
+## What worked well
 
-The compact navigation, consistent spacing rhythm, and limited palette create a calm, coherent foundation. The mobile layout preserves the desktop content order, and customer logos appear close enough to the hero to provide early reassurance.
+The compact navigation, consistent spacing, and restrained palette create a calm foundation. Mobile preserves the same content order, and customer logos provide early reassurance.
 
-## Prioritized findings
+## Journey replay
 
-### **[P1] The hero explains the mechanism before the outcome**
+### Sam sees the product before understanding the payoff
 
-**Observed:** In the fictional desktop screenshot, the headline says “One workspace for every project signal,” while three dashboard panels occupy more visual area than the supporting copy.  
-**What is wrong:** “Project signal” is internal product language and the interface preview does not resolve what improves for the user.  
-**Why it matters:** **Inference:** New visitors must translate the terminology before deciding whether the product is relevant, likely weakening engagement with the trial action.  
-**How to improve:** Lead with the concrete outcome and audience—such as helping product teams spot delivery risks earlier—then use the interface preview as proof of that promise.
+**Browser fact:** The fictional hero says “One workspace for every project signal” while three dashboard panels dominate the screen.
 
-### **[P1] The primary call to action lacks decision support**
+**Likely user question:** “What improves for my team if we switch?”
 
-**Observed:** “Start free” appears twice before pricing, setup expectations, or a description of the trial.  
-**What is wrong:** The action is prominent, but the page has not answered the practical questions attached to it.  
-**Why it matters:** **Inference:** Visitors with intent may postpone action because cost, commitment, and setup effort remain unclear.  
-**How to improve:** Add a short reassurance line beside the first action—trial duration, no-card policy, and typical setup time—and introduce a product tour as the lower-commitment secondary path.
+The product looks mature, but “project signal” asks Sam to decode internal language before deciding whether Atlas is relevant.
 
-### **[P2] Secondary text loses contrast on mobile**
+### Starting is visible but not yet low risk
 
-**Observed:** The synthetic accessibility audit flags insufficient contrast, and the fictional mobile screenshot shows gray 14 px copy on a tinted panel.  
-**What is wrong:** Supporting explanations are visually de-emphasized beyond comfortable reading.  
-**Why it matters:** Low-vision users may miss context required to understand the feature, while all mobile readers face additional effort.  
-**How to improve:** Use the primary body-text token, retain at least a 16 px mobile size, and verify WCAG contrast after adjusting the panel background.
+**Browser fact:** “Start free” appears before trial length, card policy, or setup expectations.
 
-## Conversion-flow analysis
+**Likely user question:** “What am I committing to?”
 
-The intended path is promise → interface proof → customer validation → trial. The transition from proof to validation is credible, but the promise is not concrete enough and the trial terms arrive too late. Reframe the hero around the user outcome, place one measurable customer result after the interface preview, and answer commitment questions next to the first call to action.
+The CTA is visually successful but arrives before the page resolves practical objections.
 
-## Technical and accessibility signals
+## Priority findings
 
-Synthetic scores: Performance 86, Accessibility 91, Best Practices 96, SEO 100. The mock audit identifies oversized hero imagery and one contrast failure. No fictional console errors or failed requests were included.
+### **[P1] Sam has to translate the hero before judging fit**
 
-## Recommended redesign direction
+**What happened:** Interface panels receive more emphasis than the user outcome.
 
-Preserve the restrained visual system. Rebuild the page around a single narrative: the delivery risk teams cannot see, how Atlas reveals it, evidence that the signal is reliable, and a low-risk way to try it. Reduce the hero preview to one annotated product moment instead of three equally weighted panels.
+**Likely user question:** “Is this for product teams like mine, and what problem goes away?”
 
-## Immediate actions
+**Recommended change:** Lead with the audience and concrete outcome, then reduce the preview to one annotated product moment that proves the claim.
 
-1. Replace the abstract headline with an audience-and-outcome statement.
-2. Add trial conditions beside the first call to action.
-3. Increase mobile supporting-copy contrast and size.
-4. Resize and modernize the hero image delivery.
+### **[P1] The free trial does not explain its boundaries**
 
-## Longer-term improvements
+**What happened:** The main action appears without trial duration, card requirement, or expected setup effort.
 
-1. Test the revised positioning with target product leaders.
-2. Build a customer-proof module that connects a named problem to a measurable result.
-3. Define content and contrast rules in the design system so hierarchy remains accessible.
+**Likely user question:** “Can I explore this safely before involving my team?”
+
+**Recommended change:** Put a one-line reassurance beside the CTA and offer a product tour as the lower-commitment alternative.
+
+## Action plan
+
+### Do now
+
+1. Rewrite the hero around the user outcome.
+2. Explain trial commitment beside the CTA.
+3. Increase mobile supporting-text contrast and size.
+
+### Learn next
+
+Test whether target product leads can explain Atlas’s value after five seconds and predict what happens after clicking “Start free.”

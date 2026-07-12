@@ -1,0 +1,16 @@
+{
+  "name": "A product lead decides whether to try Linear",
+  "persona": "A product lead at a 25-person software company using a fragmented mix of issue trackers, documents, and chat",
+  "scenario": "The team is adding AI coding agents and the lead wants one place to coordinate human and agent work without slowing everyone down",
+  "goal": "Understand Linear's promise, see whether it fits the team's workflow, and reach workspace creation",
+  "successCriteria": ["The promise and audience are clear", "The lead finds concrete workflow evidence", "The signup handoff explains what happens next"],
+  "viewport": "mobile",
+  "steps": [
+    { "name": "Arrive with a fragmented workflow", "action": "goto", "path": "/" },
+    { "name": "Understand the product promise", "action": "assertText", "text": "The product development system for teams and agents" },
+    { "name": "Look for operational proof", "action": "assertText", "text": "Make product operations self-driving" },
+    { "name": "Check whether the system covers the full cycle", "action": "assertText", "text": "Understand progress at scale" },
+    { "name": "Try to create a workspace", "action": "click", "selector": "a[href='/signup']:visible" },
+    { "name": "Confirm the signup handoff", "action": "assertText", "text": "Create your workspace" }
+  ]
+}

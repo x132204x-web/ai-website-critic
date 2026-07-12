@@ -1,66 +1,121 @@
-# Product Design Review: Linear
+# Linear User Journey Review
 
-**Reviewed:** July 12, 2026  
-**Scope:** Public homepage, desktop and mobile  
-**Evidence:** Full-page screenshots plus one Lighthouse run. Dynamic behavior was not tested; 2 desktop and 4 mobile request failures may affect the capture.
+**Reviewed:** July 12, 2026
+**Journey:** A product lead decides whether to try Linear
+**Device:** Mobile, 390×844
+**Tested path:** Homepage → product workflow proof → signup → workspace creation
 
-## Executive verdict
+## Who are we following?
 
-Linear presents a remarkably coherent product world: it connects a clear category claim to progressively deeper product proof without breaking its visual language. The principal weakness is not positioning but acquisition efficiency—the dark, image-heavy experience is slow in this run, and several accessibility defects undermine an otherwise meticulous interface.
+**Maya leads product at a 25-person software company.** Her team works across an issue tracker, documents, and chat. They are adding AI coding agents, and she wants one system that coordinates people and agents without adding more process.
 
-## Scorecard
+Her goal is to understand what Linear would change for her team, see enough workflow proof to trust the promise, and reach workspace creation.
 
-| Dimension | Score | Rationale |
-| --- | ---: | --- |
-| Positioning and clarity | 9/10 | The hero names the category and audience directly. |
-| Visual hierarchy | 8/10 | Strong sectional rhythm, with some small supporting text. |
-| Aesthetic coherence | 9/10 | Exceptionally consistent dark product language. |
-| Usability and information architecture | 8/10 | The narrative moves from promise to workflows to proof. |
-| Conversion effectiveness | 7/10 | Calls to action are clear but product density makes the journey long. |
-| Trust and credibility | 9/10 | Recognizable customers, detailed product proof, and testimonials reinforce trust. |
-| Accessibility and responsiveness | 6/10 | Lighthouse found unnamed controls, contrast, headings, and link-name issues. |
-| Technical quality | 5/10 | Performance scored 54; LCP was 16.8 seconds in this run. |
+> This is a simulated journey used as an evaluation lens, not a real usability-test participant. Browser actions are facts; user questions are clearly marked as inference.
 
-## What is working
+## Bottom line
 
-The page behaves like a product argument rather than a feature catalog. Desktop and mobile preserve the same promise, proof sequence, and final action. Product imagery is specific enough to explain how the system works, while customer evidence arrives early and again near conversion.
+> **Linear makes its new “teams and agents” direction clear and carries Maya all the way to a simple workspace signup. The journey feels coherent, but its strongest product proof arrives slowly and becomes repetitive on mobile.**
+>
+> **Most important action:** Make the first product image load immediately, then shorten the mobile proof sequence around the three workflows most relevant to a new team.
 
-## Prioritized findings
+**No P0 issue was found.** All 6 journey steps completed and signup landed on “Create your workspace.”
 
-### **[P1] The flagship visual arrives too slowly**
+## Priority snapshot
 
-**Observed:** Lighthouse measured 16.8 s LCP, reported the LCP image as lazily loaded, and flagged main-thread work and image delivery.  
-**What is wrong:** The hero's primary proof—the interface image—is technically deprioritized even though it carries much of the positioning.  
-**Why it matters:** **Inference:** A slow first proof delays comprehension and makes a premium, speed-oriented product feel less responsive than its promise.  
-**How to improve:** Load the hero asset eagerly with explicit priority, ship a correctly sized modern format, and reduce work required before its first render.
+| Priority | What Maya runs into | Why it matters | Recommended action |
+| --- | --- | --- | --- |
+| **P1** | The first product proof is extremely slow | The promise depends on seeing the product | Prioritize and resize the hero image |
+| **P1** | Accessibility issues sit inside key controls and content | Some users cannot follow the same journey | Fix names, contrast, links, and headings |
+| **P2** | Mobile proof becomes long and visually repetitive | Later capabilities lose attention | Compress and vary the proof sequence |
 
-### **[P1] Polished visuals conceal accessibility debt**
+## Journey at a glance
 
-**Observed:** Lighthouse identified unnamed buttons and links, insufficient contrast, and non-sequential headings; accessibility scored 85.  
-**What is wrong:** Semantic and contrast defects sit beneath an experience that otherwise appears carefully resolved.  
-**Why it matters:** These issues obstruct assistive-technology users and weaken keyboard/screen-reader comprehension of the product narrative.  
-**How to improve:** Give every control an accessible name, audit muted text tokens against WCAG contrast, and align heading levels with the visible section hierarchy.
+| Moment | What Maya is trying to do | Experience | State |
+| --- | --- | --- | --- |
+| Arrive | Decide whether Linear fits a mixed human/agent team | The hero names both teams and agents | **Clear** |
+| Understand the workflow | See more than a category claim | Intake, plan, build, review, and monitor are demonstrated | **Clear but dense** |
+| Look for operational value | Understand what changes day to day | “Make product operations self-driving” is backed by UI examples | **Clear** |
+| Judge full-cycle coverage | Check whether Linear replaces fragmented tools | The page continues through direction, execution, reviews, and progress | **Convincing but long** |
+| Try it | Create a workspace | “Sign up” reaches a focused workspace-creation screen | **Clear** |
 
-### **[P2] Mobile product detail becomes visually repetitive**
+## What worked well
 
-**Observed:** The mobile screenshot stacks multiple dark interface panels and similarly weighted copy blocks across a very long page.  
-**What is wrong:** Repetition reduces the contrast between distinct stages of the product story.  
-**Why it matters:** **Inference:** Visitors may skim past later capabilities because each section feels like another instance of the same pattern.  
-**How to improve:** Collapse secondary detail, vary proof formats, and introduce short outcome-led summaries before dense interface evidence.
+- The first sentence states both the product category and the changing audience: **“teams and agents.”**
+- The page explains a complete product-development cycle rather than listing disconnected features.
+- Recognizable customer evidence appears early and again near the decision point.
+- Signup asks Maya to create a workspace and offers Google, email, and SAML paths without an unexpected detour.
 
-## Recommended redesign direction
+## Journey replay
 
-Preserve the product-led narrative and visual restraint. Concentrate design effort on faster hero proof, semantic accessibility, and a more compressed mobile story rather than restyling the brand.
+### 1. Maya quickly understands the new promise
 
-## Quick wins
+**Browser fact:** The mobile hero says, “The product development system for teams and agents,” followed by a detailed product interface.
 
-1. Remove lazy loading from the LCP image and prioritize its request.
-2. Fix accessible names and heading order.
-3. Increase contrast for muted supporting copy.
-4. Compress one or two secondary mobile product sections.
+**Likely user question:** “Is this still an issue tracker, or is it now the operating system for all product work?”
 
-## Longer-term improvements
+The following sections answer that question reasonably well. Linear moves from intake and planning through building, code review, and progress monitoring, so the category claim gains substance.
 
-1. Establish performance budgets for the hero and product demos.
-2. Add automated accessibility checks to the marketing component library.
-3. Test a shorter mobile narrative against the current long-form page.
+### 2. The proof is strong, but expensive to receive
+
+**Browser fact:** Lighthouse measured **19.1 seconds LCP**, identified the LCP image as lazily loaded, and scored performance at **58**.
+
+**Likely user question:** “Why is the product preview taking so long when speed is part of Linear’s reputation?”
+
+This is not merely a technical score. The product image is the evidence that helps Maya understand the promise, so delaying it delays product comprehension.
+
+### 3. The long mobile story starts to blur together
+
+**Browser fact:** The mobile page stacks multiple dark interface panels and similarly weighted product sections before reaching testimonials and the final CTA.
+
+**Likely user question:** “Which three capabilities matter for my team right now?”
+
+The breadth builds confidence, but repeated section structure weakens the distinction between primary reasons to adopt and secondary capabilities.
+
+### 4. Signup is direct and matches the CTA
+
+**Browser fact:** Clicking the visible signup action reached `/signup`, where the page says “Create your workspace” and offers Google, email, and SAML SSO. All journey steps completed.
+
+**Likely user question:** “Can I start in the way my company already authenticates?”
+
+The handoff answers this well and preserves momentum.
+
+## Priority findings
+
+### **[P1] Maya waits too long for the visual that explains the product**
+
+**What happened:** The main product visual produced a 19.1-second LCP in this run and was lazily loaded.
+
+**Likely user question:** “Is the page stuck?”
+
+**Why it matters:** The interface is not decoration; it is the primary evidence for a broad positioning claim.
+
+**Recommended change:** Eagerly load and explicitly prioritize the LCP image, ship the correct responsive size, and reduce work before first render.
+
+### **[P1] The polished journey is not equally usable for everyone**
+
+**What happened:** Accessibility scored 85. Detailed checks found unnamed buttons and links, insufficient contrast, and non-sequential headings.
+
+**Likely user question:** “Can I understand and operate this page with my assistive technology?”
+
+**Recommended change:** Match visible and accessible names, repair heading order, and raise muted-text contrast through shared design tokens.
+
+### **[P2] Maya receives more proof than prioritization**
+
+**What happened:** Many mobile sections use the same pattern and visual weight.
+
+**Likely user question:** “What should convince me first?”
+
+**Recommended change:** Lead with three adoption reasons for a first-time team, collapse secondary detail, and vary proof formats so later sections regain attention.
+
+## Action plan
+
+### Do now
+
+1. Fix hero image priority and responsive delivery.
+2. Repair accessible names, contrast, links, and heading order.
+3. Shorten the default mobile product story.
+
+### Learn next
+
+Test whether product leads can explain Linear’s distinct value for human-and-agent teams after the first three sections, not only after reading the full page.
