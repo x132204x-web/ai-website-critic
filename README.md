@@ -1,8 +1,14 @@
 # AI Website Critic
 
-AI Website Critic gives coding agents an evidence-led workflow for experiencing websites through a realistic user journey. It combines scripted Playwright interactions, screenshots, browser diagnostics, and Lighthouse metrics, then helps the agent explain where a person succeeds, hesitates, or gets blocked.
+AI Website Critic is an evidence-led website review skill for Codex and Claude Code. It guides an agent through a realistic user journey, combining scripted Playwright interactions, screenshots, browser diagnostics, and Lighthouse metrics to explain where a person succeeds, hesitates, or gets blocked.
 
 It is a reusable skill, not a SaaS product. No separate LLM API key is required.
+
+## At a glance
+
+- Review a website through a defined user journey rather than a generic checklist
+- Capture desktop and mobile evidence, browser diagnostics, and Lighthouse metrics
+- Produce a concise critique with direct evidence, product reasoning, and prioritized next steps
 
 ## What it produces
 
