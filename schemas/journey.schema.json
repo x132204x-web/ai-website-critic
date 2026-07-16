@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/x132204x-web/ai-website-critic/blob/main/schemas/journey.schema.json",
+  "title": "AI Website Critic journey",
+  "type": "object",
+  "required": ["name", "persona", "scenario", "goal", "successCriteria", "steps"],
+  "properties": {
+    "$schema": { "type": "string" }, "name": { "type": "string", "minLength": 1 }, "persona": { "type": "string", "minLength": 1 }, "scenario": { "type": "string", "minLength": 1 }, "goal": { "type": "string", "minLength": 1 }, "successCriteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }, "viewport": { "enum": ["desktop", "mobile"] },
+    "steps": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["name", "action"], "properties": { "name": { "type": "string", "minLength": 1 }, "action": { "enum": ["goto", "click", "fill", "waitFor", "assertText", "screenshot"] }, "selector": { "type": "string", "minLength": 1 }, "locator": { "oneOf": [{ "type": "object", "required": ["by", "value"], "properties": { "by": { "const": "css" }, "value": { "type": "string", "minLength": 1 } }, "additionalProperties": false }, { "type": "object", "required": ["by", "role"], "properties": { "by": { "const": "role" }, "role": { "type": "string", "minLength": 1 }, "name": { "type": "string" }, "exact": { "type": "boolean" } }, "additionalProperties": false }, { "type": "object", "required": ["by", "value"], "properties": { "by": { "enum": ["label", "placeholder", "text", "testId"] }, "value": { "type": "string", "minLength": 1 }, "exact": { "type": "boolean" } }, "additionalProperties": false }] }, "value": { "type": "string" }, "valueFromEnv": { "type": "string", "minLength": 1 }, "sensitive": { "type": "boolean" }, "path": { "type": "string" }, "text": { "type": "string", "minLength": 1 }, "note": { "type": "string" } }, "allOf": [{ "not": { "required": ["selector", "locator"] } }, { "not": { "required": ["value", "valueFromEnv"] } }], "additionalProperties": false } }
+  },
+  "additionalProperties": false
+}

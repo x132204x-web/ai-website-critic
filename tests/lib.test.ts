@@ -1,6 +1,7 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { artifactPaths, normalizeLighthouseResult, renderEvidence, renderJourneyEvidence, validateJourneySpec, validateUrl } from "../src/lib.js";
+import { Redactor, stripAnsi } from "../src/privacy.js";
 
 describe("validateUrl", () => {
   it("accepts HTTP(S)", () => expect(validateUrl("https://example.com/a").hostname).toBe("example.com"));
@@ -24,7 +25,7 @@ it("normalizes scores and prioritizes failed audits", () => {
 });
 
 it("renders explicit evidence language", () => {
-  const markdown = renderEvidence("https://example.com", [], { requestedUrl: "https://example.com", fetchedAt: "now", scores: { performance: 90 }, findings: [] });
+  const markdown = renderEvidence("https://example.com", [], { mobile: { requestedUrl: "https://example.com", profile: "mobile", fetchedAt: "now", scores: { performance: 90 }, findings: [] } });
   expect(markdown).toContain("Deterministic evidence only");
   expect(markdown).toContain("| performance | 90 |");
 });
@@ -33,6 +34,19 @@ it("validates a journey and rejects embedded incomplete fill steps", () => {
   const valid = validateJourneySpec({ name: "Signup", persona: "New visitor", scenario: "Comparing tools", goal: "Reach signup", successCriteria: ["Signup is visible"], steps: [{ name: "Open", action: "goto", path: "/" }] });
   expect(valid.name).toBe("Signup");
   expect(() => validateJourneySpec({ ...valid, steps: [{ name: "Email", action: "fill", selector: "input" }] })).toThrow("requires value");
+});
+
+it("supports structured locators and rejects conflicting targets", () => {
+  const base = { name: "Signup", persona: "Visitor", scenario: "Trying a product", goal: "Start", successCriteria: ["See form"] };
+  expect(validateJourneySpec({ ...base, steps: [{ name: "Start", action: "click", locator: { by: "role", role: "button", name: "Start" } }] }).steps[0].locator).toBeTruthy();
+  expect(() => validateJourneySpec({ ...base, steps: [{ name: "Start", action: "click", selector: "button", locator: { by: "css", value: "button" } }] })).toThrow("either selector or locator");
+  expect(() => validateJourneySpec({ ...base, steps: [{ name: "Email", action: "fill", selector: "input", value: "a", valueFromEnv: "EMAIL" }] })).toThrow("either value or valueFromEnv");
+});
+
+it("strips terminal formatting and redacts plain and encoded secrets", () => {
+  const redactor = new Redactor(); redactor.add("a+b@example.com");
+  expect(stripAnsi("\u001b[2mwaiting\u001b[22m")).toBe("waiting");
+  expect(redactor.redact("a+b@example.com and a%2Bb%40example.com")).toBe("[REDACTED] and [REDACTED]");
 });
 
 it("renders a plain journey timeline", () => {
