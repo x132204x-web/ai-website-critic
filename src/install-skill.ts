@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
+
+interface InstallOptions { target: "codex" | "claude"; mode: "link" | "copy"; force: boolean; check: boolean; project: string }
+function parse(args: string[]): InstallOptions { const target = args[0]; if (target !== "codex" && target !== "claude") throw new Error("Usage: install-skill <codex|claude> [--copy] [--force] [--check] [--project <path>]"); let project = process.cwd(); for (let i = 1; i < args.length; i++) { if (args[i] === "--project") { const v = args[++i]; if (!v) throw new Error("--project requires a path"); project = path.resolve(v); } else if (!["--copy", "--force", "--check"].includes(args[i])) throw new Error(`Unknown option: ${args[i]}`); } return { target, mode: args.includes("--copy") ? "copy" : "link", force: args.includes("--force"), check: args.includes("--check"), project }; }
+function targetPath(options: InstallOptions) { return options.target === "codex" ? path.join(process.env.CODEX_HOME ?? path.join(os.homedir(), ".codex"), "skills", "ai-website-critic") : path.join(options.project, ".claude", "skills", "ai-website-critic"); }
+async function main() { const options = parse(process.argv.slice(2)), source = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../skill/ai-website-critic"), target = targetPath(options), existing = await fs.lstat(target).catch(() => undefined); if (options.check) { if (!existing) throw new Error(`Not installed: ${target}`); const linked = existing.isSymbolicLink() ? await fs.realpath(target).catch(() => "") : ""; if (existing.isSymbolicLink() && linked !== source) throw new Error(`Installed link points elsewhere: ${linked}`); console.log(`Installed (${existing.isSymbolicLink() ? "link" : "copy"}): ${target}`); return; } if (existing && !options.force) throw new Error(`${target} already exists. Use --force only when you intend to replace it.`); if (existing) await fs.rm(target, { recursive: true, force: true }); await fs.mkdir(path.dirname(target), { recursive: true }); if (options.mode === "copy") await fs.cp(source, target, { recursive: true }); else await fs.symlink(source, target, process.platform === "win32" ? "junction" : "dir"); console.log(`Installed AI Website Critic for ${options.target}: ${target} (${options.mode})`); }
+main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });

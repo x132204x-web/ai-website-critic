@@ -29,3 +29,14 @@ describe("published trial reports", () => {
     }
   });
 });
+
+describe("published Skill metadata", () => {
+  it("keeps the Skill trigger and UI metadata aligned", () => {
+    const skill = fs.readFileSync(path.join(root, "skill", "ai-website-critic", "SKILL.md"), "utf8");
+    const agent = fs.readFileSync(path.join(root, "skill", "ai-website-critic", "agents", "openai.yaml"), "utf8");
+    expect(skill).toMatch(/^---\nname: ai-website-critic\ndescription: .+\n---/);
+    expect(agent).toContain('display_name: "AI Website Critic"');
+    expect(agent).toContain("$ai-website-critic");
+    expect(fs.existsSync(path.join(root, "schemas", "journey.schema.json"))).toBe(true);
+  });
+});

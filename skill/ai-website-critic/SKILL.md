@@ -11,10 +11,10 @@ Evaluate whether the website helps a real person complete a meaningful task, not
 
 1. Confirm the user supplied an HTTP(S) URL. Treat every complete website review as a user-journey review, including marketing sites and public homepages. Never substitute a static page critique for a journey report.
 2. Read [prompts/journey.md](prompts/journey.md). Define a concrete persona, situation, goal, concerns, success criteria, and 3–8 meaningful moments.
-3. Create a journey JSON matching the repository example. Use `valueFromEnv` for approved test credentials. Do not automate purchases, destructive actions, external messages, or production data changes without explicit authorization.
-4. Locate this skill's repository root. Run `npm install` and `npx playwright install chromium` only when dependencies are missing.
-5. Run `npm run audit -- <url> --journey <journey.json> --output <audit-directory>`. Use `--page-only` only when gathering supplementary evidence; do not produce a final review from page-only evidence.
-6. Read all manifest artifacts, including `journey.json` and `journey.md` when present. Inspect every screenshot visually.
+3. Create a journey JSON matching the repository example or run `npm run journey:init -- <journey.json>`, then run `npm run journey:validate -- <journey.json>`. Prefer structured role, label, text, or test-id locators over fragile CSS. Use `valueFromEnv` for approved test credentials; its value is masked and redacted by default. Do not automate purchases, destructive actions, external messages, or production data changes without explicit authorization.
+4. Locate this skill's repository root. Run `npm ci` and `npx playwright install chromium` only when dependencies are missing.
+5. Run `npm run audit -- <url> --journey <journey.json> --output <audit-directory>`. Choose `--journey-viewport` when the journey must differ from a single page-capture viewport. Use `--page-only` only when gathering supplementary evidence; do not produce a final review from page-only evidence.
+6. Read `manifest.json` first. If its status is `partial` or `failed`, state the limitation. Then read all available artifacts, including `journey.json` and `journey.md`, and inspect every screenshot visually.
 7. Read [prompts/critic.md](prompts/critic.md) before analyzing and [prompts/report.md](prompts/report.md) before writing.
 8. Write the completed review from [assets/report-template.md](assets/report-template.md). Replace every placeholder and remove empty sections.
 
